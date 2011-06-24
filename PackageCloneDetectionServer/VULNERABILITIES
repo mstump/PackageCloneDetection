@@ -1,0 +1,175 @@
+----
+check tkimg in debian
+check expat vulns in debian
+----
+
+==== centos
+
+opal uses speex (sent to redhat)
+
+==== found using cross check advisories
+
+gnucash cve-2010-3999 (checked 12 Nov 2010)
+
+unsent
+cacti cve-2010-2545 (checked 13 Nov 2010) fixed in rhel, not in fedora
+
+===== found vulns in redhat (fedora) using cliques
+OpenSceneGraph (already reported)
+mrpt (mrpt-opengl) uses lib3ds vuln (submitted to bugzilla. confirmed) 
+mingw32-OpenSceneGraph uses lib3ds (sent)
+expat (not sent yet) - i have sent some of these. have to check which ones i did
+	libtlen
+	udunits2
+	nodeupdown-backend-ganglia
+	mcabber (embeds libjabber?)
+	centerim (embeds libjabber?)
+
+(using dir names)
+xwnc uses libXfont (sent) - not security sensitive (end of life)
+nx uses libXfont (sent) - not security sensitive
+
+libwmf uses libgd (sent)
+
+==== found vulns in redhat (fedora) using subset
+kadu-0.6.5.4-4 using mimetex 1.60 (Feb 2009) (didnt appear with clique because size is 3)
+	
+============
+Found using cve references to filenames
+
+libpam-opie has a vuln freebsd opie vuln (debian  knew about opie but not libpam-opie)
+wengophone embeds gaim which is vuln
+silc-client embeds irssi which is vuln #actually fixed in an earlier version (fp but still interesting)
+pysol-sound-server embeds libmikmod and is vuln
+plt-scheme embeds libgd 2.x and is vuln
+boson using lib3ds (duplicate)
+R-2.7.1 (duplicate)
+R-2.7.1-ra (duplicate)
+tkimg1.3 (duplicate)
+gnome-xcf-thumbnailer embeds xcftool which is vuln (fixed in a later version)
+
+=============
+sent to debian bug reports
+	boson using lib3ds (vuln)
+	openscenegraph using lib3ds (vuln)
+
+missing in debian embedded code copies
+	libevent
+		dnsproxy (fixed) *added to svn
+	libgadu
+		wengophone
+	curl
+		wengophone (unaffected? marked as unknown) *added to svn
+
+known by debian
+	libgadu
+		centerim # vuln (cve-2008-4776) # fixed upstream # debian know http://www.mail-archive.com/debian-security@lists.debian.org/msg36338.html
+
+missing in debian embedded code copies (#sent to debian)
+	expat
+		centerim #looks vuln updated svn
+		libaprutil1 (fixed) #they know this as apr-util
+		albert #vuln updatePosition (cve-2009-3720) * updated svn and submitted bug
+		celemnttree (fixed) #they knoew this
+		cvsnt (fixed) #updated svn
+		dasher (fixed) #updated svn
+		grmonitor (fixed - using libxmltok) # they know
+		jabber (fixed) #updated svn
+		libspiff (fixed) #updated svn
+		mcabber # vuln updatePosition (cve-2009-3720) # updated svn and submitted bug
+		scorched3d (fixed) #updated svn
+		sitecopy (fixed i think - through some extra dependencies i think - might want to check) # they know
+		tdom (fixed) #they know
+		xmame (fixed) #updated svn
+		xotcl # vuln updatePosition (cve-2009-3720) #fixed in unstable/testing
+	speex
+		libopal-2.2 (fixed) *added to svn
+		mumble (fixed) *added to svn
+		libopenh323 (check this)
+	t1lib
+		grace (fixed) # added to svn
+
+in debian embedded (havent gone through these yet)
+	expat
+		apache2_2.2.9
+		audicity # fixed
+		cableswig #vuln debian know
+		cadaver #vuln debian know
+		cmake # fixed
+		ganglia-monitor #sent
+		ghostscript
+		grace
+		grmonitor
+		iceape
+		iceweasel
+		insighttoolkit
+		libparaugui
+		matanza
+		paraview
+		poco
+		python2.4
+		python2.5
+		simgear
+		texlive-bin
+		tla
+		vnc4
+		vtk
+		xulrunner
+		wxwidghets2.6
+		ayttm (fixed) #deb wrong
+--
+	mozilla using expat 2.0.0 (patched in 2.0.1) # detected as PyXML
+--
+In debian upstream but not in redhat build #not checked
+	dasher using expat (python-xml)
+	cableswig using expat (python-xml)
+	grace6 using t1 and expat (python-xml)
+	scorched3d using expat
+
+In Debian src security@debian.org
+	criticalmass-1.0.0 using libcurl 7.14.0 (7.10.5 - 7.19.7 vuln to cve-2010-0734)
+	ganglia-monitor-core-2.5.7 using expat
+	matanza-0.13 using expat # debian know its embed #debian know its vuln
+	simgear1.0.0 using expat # debian know
+	
+Upstream but not in Redhat build
+	SAOImage DS9 using tkimg-1.3 which uses old libtiff #grep
+	gdal (HAVENT MAILED YET) #grep
+	vtk5.6 using vuln libtiff and libpng (HAVENT MAILED YET) #grep
+	paraview using vtk using libtiff/libpng etc (HAVENT MAILED YET) #grep
+	OpenCV 2.1.0 using libtiff/libpng/libjpeg (windows only) #grep #web report
+	tla-1.3.5 using libneon #web repository
+	cadaver using libneon # HAVENT CHECKED # .c
+
+UNCHECKED in redhat upstream (TODO) #grep
+	tuxcmd-modules using bzip2
+	vrq using bzip2
+	Coccinella using tkimg 1.3
+	xmoto using bzip2
+	pards using bzip2
+	codeblocks using bzip2
+	gtkwave using bzip2
+	R using bzip2
+	perl-Compress-Bzip2 using bzip2
+	*** lots more to check
+
+Redhat secalert@redhat.com
+	tkimg-1.4-0.7.20091129svn.fc.13 using libtiff 3.8.2 /libpng and others
+	spicebird-0.7.1-1 using vuln libpng/dbus/nss/nss-util
+	sepostgresql using postgresql 9.0beta1
+	zafara-6.40.1 using php-Smarty (FALSE POSITIVE - not shipped)
+	ser-0.9.6 using php-Smarty 2.6.2
+	postgresql-pgpoolAdmin-2.2 using php-Smarty 2.6.13
+	gallery2 using php-Smarty 2.6.20 (HAVENT MAILED YET)
+	cgit-0.8.2-3 using git 1.6.1.1 (CONFIRMED)
+
+Debian security@debian.org
+	libfreeimage 3.10.0-1 using libtiff 3.9.0beta and libpng.1.2.23 # grep (CONFIRMED)
+	r-base-core_2.7.1 using libbz2 # grep # not known by debian (NOT VERIFIED)
+	r-base-core-ra_1.1.1-2 using libbz2 # grep # not known by debian (NOT VERIFIED)
+	lsb-rpm_4.4.2.3-1 #grep #not known by debian (NOT VERIFIED)
+	dpkg-deb using libbz2 #debnian know embed
+	dar-static using libbz2 #debian know embed
+
+opensuse 11.2 security@suse...
+	pdfedit-1.4.3 using xpdf 3.0 (no longer maintained) #silently patched

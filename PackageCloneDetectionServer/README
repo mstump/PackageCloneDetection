@@ -1,0 +1,77 @@
+1 WHAT DOES IT DO?
+2 WHAT SYSTEMS DOES IT WORK ON?
+3 DOES IT WORK?
+4 HOW MUCH DISK SPACE DO I NEED?
+5 WHERE DID IT COME FROM?
+6 CAN I USE IT FOR ANYTHING ELSE?
+7 HOW DOES IT WORK?
+8 WHERE DO I SEND SUGGESTIONS, PATCHES, FIXES AND COMMENTS?
+9 HOW DO I CITE/REFERENCE THIS WORK?
+10 WHAT SOFTWARE LICENSE IS THIS WORK UNDER?
+11 WHAT IS THE CODE QUALITY LIKE?
+
+1 WHAT DOES IT DO?
+
+It tries to find vulnerabilities in packages and tells you the CVE number associated with a vulnerability that is probably in the package it identifies.
+
+Lets give an example..
+
+If libpng is vulnerable with CVE-1900-0001, and we know firefox embeds libpng, then firefox should also be vulnerable. If Firefox doesn't report a vulnerabilityassociated with that CVE, then we may have found a new vulnerability.
+
+So in short, I find embedded packages and match the CVEs. Embedded packages are private copies of one package in another package. Embedding a package means you don't use shared libraries or dynamic linking. It means, that every time there is a vulnerability in a library that's been embedded, you need to update the package that embeds it. It's mostly a pain to maintain embedded libraries, so you should avoid it if possible. Another similar problem occurs with static linking.
+
+2 WHAT SYSTEMS DOES IT WORK ON?
+
+It currently only works on RedHat and Debian or RPM and Deb bbased systems. It works on RPM packages and uses yumdownloader, which Fedora provides. It uses apt-get for Debian.
+
+3 DOES IT WORK?
+
+Yes. It found some real and previously unknown vulnerabilities. It also verified some known vulnerabilities. It also causes some false positives, so you should manually verify all reports.
+
+4 HOW MUCH DISK SPACE DO I NEED?
+
+The RPM packages total 23G as of September 2010. Creating the vector file for the packages on this data set required about 18G. Plus there are some files such as the filename database. So let's just say you should have about 50G of disk space free. FWIW, I don't store all the RPM packages unpacked. I unpack one at a time, and delete them shortly afterwards. But you still need 50G of disk space.
+
+5 WHERE DID IT COME FROM?
+
+The idea and code was developed during my PhD studies at Deakin University. The author is Silvio Cesare.
+
+6 CAN I USE IT FOR ANYTHING ELSE?
+
+Yes. Knowing if a package is embedded is useful in its own right even if its not a security issue. It can be used in general software development and management. I know Debian manually maintains a list of embedded packages, but automagically generating offers some serious advantages if you manually verify to eliminate the false positives. It can also generate false negatives, so don't rely only on the results.
+
+7 HOW DOES IT WORK?
+
+1) First, source packages are downloaded.
+2) The packages unpacked and a database built from the filenames in the package.
+3) The filenames from all packages are merges to create what will be used as a feature list.
+4) The most frequent filenames are removed from the feature list since they only cause false positives and arent good identifiers.
+5) The feature list is represented as a set or vector, and a vector created for every package. If tif_readdir.c is a feature, and the package contains that file, then that element in the vector is set to 1, otherwise it's ok.
+6)
+	i) Vectors or sets that are found to be subsets of other sets are recorded. This is one way how we discover embedded packages. To determine if one vector is a subset of another, the intersection of the two sets are taken. An approximate match is allowed.
+	ii) We find relationships between packaes by seeing if they share a minimal amount of filenames and fuzzy hashes of content. We can find sets of related packages by finding cliques in the relationships graph. Then we use some heuristics to find which one of those packages is the embedded one.
+7) Packages are associated with CVEs by crawling the package-announce mailing list and extracting CVE numbers from the package's security update post.
+8) 
+	i) If an embedded package has a CVE associated with it, then the same CVE should be associated with the package that embeds it. If there is no such association, then we flag the CVE and the package that does the embedding.
+	ii) If a set of related packages have a vuln, then we expect all packages in the set to share the vuln.
+
+8 WHERE DO I SEND SUGGESTIONS, PATCHES, FIXES AND COMMENTS?
+
+Firstly, emails are welcome.
+
+<silvio _dot_ cesare _at_ gmail _dot_ com> (preferred)
+<scesare _at_ deakin _dot_ edu _dot_ au>
+
+Replace _dot_ with . and _at_ with @.
+
+9 HOW DO I CITE/REFERENCE THIS WORK?
+
+Some of the work is currently under review. A paper is planned, so search ieeexplore and ACM Portal for Silvio Cesare for a full reference. I am also going to be talking about it in Ruxon 2011.
+
+10 WHAT SOFTWARE LICENSE IS THIS WORK UNDER?
+
+GPL.
+
+11 WHAT IS THE CODE QUALITY LIKE?
+
+Not great. This was coded without a great design in mind so it's kinda hacked up. Likewise, I went for speed over quality, so the actual code is not the best either. This isn't to say the code is terrible, I am just being realistic. This is one of the reasons I am reimplementing it from scratch.

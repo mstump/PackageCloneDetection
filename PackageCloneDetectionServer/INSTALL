@@ -1,0 +1,7 @@
+Dunno if this still works as is..
+
+This is really a developers release where it's not expected to work for end-users.
+I am also doing a rewrite.
+
+$ make
+$ ./bin/FindVulnEmbeddedPackages.sh
