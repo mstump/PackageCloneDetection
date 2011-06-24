@@ -1,3 +1,7 @@
+0 IS THIS DOCUMENT UP TO DATE?
+
+Not really.. some of the algorithms have changed since I wrote it. Take it with a grain of salt. I'll fix when I do a proper release.
+
 1 WHAT DOES IT DO?
 2 WHAT SYSTEMS DOES IT WORK ON?
 3 DOES IT WORK?
@@ -12,7 +16,7 @@
 
 1 WHAT DOES IT DO?
 
-It tries to find vulnerabilities in packages and tells you the CVE number associated with a vulnerability that is probably in the package it identifies.
+It tries to find vulnerabilities in packages and tells you the missing CVE number associated with a vulnerability.
 
 Lets give an example..
 
@@ -66,7 +70,7 @@ Replace _dot_ with . and _at_ with @.
 
 9 HOW DO I CITE/REFERENCE THIS WORK?
 
-Some of the work is currently under review. A paper is planned, so search ieeexplore and ACM Portal for Silvio Cesare for a full reference. I am also going to be talking about it in Ruxon 2011.
+Some of the work is currently under review. A paper is planned, so search ieeexplore and ACM Portal for Silvio Cesare for a full reference. I am also going to be talking about it in Ruxcon 2011.
 
 10 WHAT SOFTWARE LICENSE IS THIS WORK UNDER?
 
