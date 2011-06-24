@@ -2,6 +2,8 @@
 
 Not really.. some of the algorithms have changed since I wrote it. Take it with a grain of salt. I'll fix when I do a proper release.
 
+Also.. check the ./bin directory for sources. It's not just ./src
+
 1 WHAT DOES IT DO?
 2 WHAT SYSTEMS DOES IT WORK ON?
 3 DOES IT WORK?
